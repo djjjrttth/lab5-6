@@ -1,0 +1,59 @@
+#include "Library.h"
+
+Library::Library(){
+
+}
+Library::Library(std::vector<Book> _books, std::vector<User> _users, std::string _dataFile){
+    books = _books;
+    users = _users;
+    dataFile = _dataFile;
+}
+void Library::addBook(const Book& book){
+    books.push_back(book);
+}
+
+void Library::addUser(const User& user){
+    users.push_back(user);
+}
+void Library::borrowBook(const std::string& userName, const std::string& isbn){
+    
+}
+void Library::returnBook(const std::string& isbn){
+
+}
+Book* Library::findBookByISBN(const std::string& isbn){
+    Book* p = nullptr;
+    for (int i = 0; i < books.size(); ++i){
+        if (books[i].getIsbn() == isbn){
+            p = &books[i];
+        }
+    }
+
+    return p;
+}
+
+User* Library::findUserByName(const std::string& name){
+    User* p = nullptr;
+    for (int i = 0; i < users.size(); ++i){
+        if (users[i].getName() == name)
+            p = &users[i];
+    }
+    return p;
+}
+void Library::displayAllBooks(){
+    for (int i = 0; i < books.size(); ++i){
+        books[i].displayInfo();
+    }
+}
+void Library::displayAllUsers(){
+    //cout << "---USERS---" << endl;
+    for (int i = 0; i < users.size(); ++i){
+        users[i].displayProfile();
+    }
+}
+void Library::saveToFile(){
+
+}
+void Library::loadFromFile(){
+
+}
