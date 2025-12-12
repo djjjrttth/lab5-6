@@ -3,6 +3,7 @@
 
 using namespace std;
 #include <vector>
+#include <fstream>
 #include "Book.h"
 #include "User.h"
 
@@ -12,7 +13,7 @@ class Library{
         std::vector<User> users;
         std::string dataFile;
     public:
-        Library();
+        Library(); 
         Library(std::vector<Book> books, std::vector<User> users, std::string dataFile);
         void addBook(const Book& book);
         void addUser(const User& user);

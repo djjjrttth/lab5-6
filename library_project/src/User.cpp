@@ -11,6 +11,11 @@ User::User(std::string _name, std::string _userId, std::vector<std::string> _bor
     userId = _userId;
     borrowedBooks = _borrowedBooks;
     maxBooksAllowed = _maxBookAllowed;
+    
+    if (borrowedBooks.size() > maxBooksAllowed){
+        std::string error = "Ошибка: превышен лимит максимального количества взятых книг.";
+        throw error;
+    }
 }
 bool User::canBorrowMore(){
     int n = borrowedBooks.size();

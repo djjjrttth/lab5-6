@@ -61,6 +61,7 @@ User createUser(){
     cin >> borrowedBooks_cnt;
 
     for (int i = 0; i < borrowedBooks_cnt; i++){
+        cout << "Книга " << i+1 << " : ";
         cin >> new_book;
         borrowedBooks.push_back(new_book);
     }
@@ -77,8 +78,11 @@ User createUser(){
 
 int main(){
     
-    
-    Library lib = Library();
+    std::vector<Book> books;
+    std::vector<User> users;
+    std::string fileName = "../data/library_data.txt";
+
+    Library lib = Library(books, users, fileName);
     
 
     int choice;
@@ -115,8 +119,13 @@ int main(){
 
     }
     else if (choice == 4){
-        User u = createUser();
-        lib.addUser(u);
+        try{
+            User u = createUser();
+            lib.addUser(u);
+        }
+        catch (std::string e){
+            cout << e << endl;
+        }
     }
     else if (choice == 5){
         std::string userName;
@@ -126,7 +135,6 @@ int main(){
         cout << "Введите ISBN книги: ";
         cin >> ISBN;
 
-        
         try{
             lib.borrowBook(userName, ISBN);
         }
@@ -154,7 +162,7 @@ int main(){
     }
     else if (choice == 7){
         std::string isbn;
-        cout << "Введите Isbn: ";
+        cout << "Введите ISBN: ";
         cin >> isbn;
 
         Book* b = lib.findBookByISBN(isbn);

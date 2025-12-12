@@ -1,5 +1,6 @@
 #include "Library.h"
-using namespace std;
+
+
 Library::Library(){
 
 }
@@ -7,6 +8,43 @@ Library::Library(std::vector<Book> _books, std::vector<User> _users, std::string
     books = _books;
     users = _users;
     dataFile = _dataFile;
+
+    /*std::ifstream in;
+    in.open(dataFile);
+
+    std::string type;
+    std::string title;
+    std::string author;
+    int year;
+    std::string isbn;
+    std::string isAvailable;
+    std::string borrowedBy;
+
+    std::string name;
+    std::string userId;
+    std::string borrowedBooks;
+    std::vector<
+    int maxBooksAllowed;
+
+    cin >> type;
+    while(type == "BOOK"){
+        cin >> title >> author >> year >> isbn >> isAvailable >> borrowedBy >> type;
+        if (isAvailable == "yes" || isAvailable == "YES")
+            Book b = Book(title, author, year, isbn, true, borrowedBy);
+        else if (isAvailable == "no" || isAvailable == "NO"){
+            Book b = Book(title, author, year, isbn, false, borrowedBy);
+        }
+    }
+
+    cin >> type;
+    
+    while((type == "---USERS---" || type == "USER")){
+        cin >> type >> name >> userId >> borrowedBooks >> maxBooksAllowed;
+        
+        }
+    }*/
+
+
 }
 void Library::addBook(const Book& book){
     
@@ -105,7 +143,38 @@ void Library::displayAllUsers(){
     }
 }
 void Library::saveToFile(){
+    std::ofstream out;
+    out.open(dataFile);
 
+    for (int i = 0; i < books.size(); i++){
+        out << "BOOK" << endl;
+        out << "Title: " << books[i].getTitle() << endl;
+        out << "Author: " << books[i].getAuthor() << endl;
+        out << "Year: " << books[i].getYear() << endl;
+        out << "ISBN: " << books[i].getIsbn() << endl;
+        out << "Available: ";
+        if (books[i].getIsAvailable()) out << "yes" << endl;
+        else out << "no" << endl;
+        out << "BorrowedBy: " << books[i].getBorrowedBy() << endl;
+    }
+    
+    out << "---USERS---" << endl;
+
+    for (int i = 0; i < users.size(); i++){
+        out << "USER" << endl;
+        out << "Name: " << users[i].getName() << endl;
+        out << "UserId: " << users[i].getUserId() << endl;
+        out << "BorrowedBooks: ";
+        std::vector<std::string> bbooks = users[i].getBorrowedBook();
+        for (int i = 0; i < bbooks.size(); ++i){
+            if (i)
+                out << "|" <<bbooks[i];
+            else
+                out << bbooks[i];
+        }
+        out << endl;
+        out << "MaxBooks: " << users[i].getMaxBooksAllowed() << endl;
+    }
 }
 void Library::loadFromFile(){
 
