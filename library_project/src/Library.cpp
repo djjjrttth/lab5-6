@@ -16,7 +16,25 @@ void Library::addUser(const User& user){
     users.push_back(user);
 }
 void Library::borrowBook(const std::string& userName, const std::string& isbn){
+    Book* b = Library::findBookByISBN(isbn);
+    User* u = Library::findUserByName(userName);
     
+    if (u == nullptr || b == nullptr){
+        std::string error = "Неверное имя пользователя или ISBN книги. Повторите попытку.";
+        throw error;
+    }
+
+    if (!(u->canBorrowMore())){
+        std::string error = "Невозможно взять книгу. Достигнуто макимальное количество доступных книг.";
+        throw error;
+        
+    }
+
+    u->addBook(isbn);
+    b->borrowBook(userName);
+    cout << "Книга добавлена." << endl;
+
+
 }
 void Library::returnBook(const std::string& isbn){
 
@@ -41,14 +59,19 @@ User* Library::findUserByName(const std::string& name){
     return p;
 }
 void Library::displayAllBooks(){
-    for (int i = 0; i < books.size(); ++i){
-        books[i].displayInfo();
+    if (books.size() == 0) cout << "Нет книг в библиотеке. Повторите попытку позже" << endl;
+    else{
+        for (int i = 0; i < books.size(); ++i){
+            books[i].displayInfo();
+        }
     }
 }
 void Library::displayAllUsers(){
-    //cout << "---USERS---" << endl;
-    for (int i = 0; i < users.size(); ++i){
-        users[i].displayProfile();
+    if (users.size() == 0) cout << "Нет зарегистрированных пользователей в библиотеке. Повторите попытку позже" << endl;
+    else{
+        for (int i = 0; i < users.size(); ++i){
+            users[i].displayProfile();
+        }
     }
 }
 void Library::saveToFile(){

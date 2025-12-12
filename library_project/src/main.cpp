@@ -15,26 +15,29 @@ Book createBook(){
     std::string author;
     int year;
     std::string isbn;
-    std::string isAvailable_str;
-    bool isAvailable;
-    std::string borrowedBy;
+    //std::string isAvailable_str;
+    bool isAvailable = true;
+    std::string borrowedBy = ""; //по умолчанию книга будет доступна и не взята
 
     cout << "NEW BOOK" << endl;
     cout << "Title: ";
     cin >> title;
-    cout << "Author: " << endl;
+    cout << "Author: ";
+    cin >> author;
     cout << "Year: ";
     cin >> year;
     cout << "ISBN: ";
     cin >> isbn;
-    cout << "Available: ";
-    if (isAvailable_str == "yes" || isAvailable_str == "YES") isAvailable = true;
-    else if (isAvailable_str == "no" || isAvailable_str == "NO") isAvailable = false;
-    cout << "BorrowedBy: ";
-    cin >> borrowedBy;
+    //cout << "Available: ";
+    
+    //if (isAvailable_str == "yes" || isAvailable_str == "YES") isAvailable = true;
+    //else if (isAvailable_str == "no" || isAvailable_str == "NO") isAvailable = false;
+    //cout << "BorrowedBy: ";
+    //cin >> borrowedBy;
 
 
     Book b = Book(title, author, year, isbn, isAvailable, borrowedBy);
+    
     return b;
 
 }
@@ -111,16 +114,39 @@ int main(){
         lib.addUser(u);
     }
     else if (choice == 5){
-        /*std::string name = u.getName();
-        std::string isbn = b1.getIsbn();
+        std::string userName;
+        std::string ISBN;
+        cout << "Введите имя пользователя: ";
+        cin >> userName;
+        cout << "Введите ISBN книги: ";
+        cin >> ISBN;
 
-        lib.borrowBook(name, isbn);*/
+        
+        try{
+            lib.borrowBook(userName, ISBN);
+        }
+        catch(std::string e){
+            cout << e << endl;
+            
+        }
     }
     else if (choice == 6){
         /*std::string isbn = b1.getIsbn();
         lib.returnBook(isbn);*/
     }
     else if (choice == 7){
+        std::string isbn;
+        cout << "Введите Isbn: ";
+        cin >> isbn;
+
+        Book* b = lib.findBookByISBN(isbn);
+        if (b == nullptr){
+            cout << "Книга не найдена" << endl;
+        }
+        else{
+            cout << "Найдена книга" << endl;
+            b->displayInfo();
+        }
         /*std::string isbn = b1.getIsbn();
         lib.findBookByISBN(isbn);*/
     }
