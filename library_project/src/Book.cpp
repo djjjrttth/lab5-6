@@ -12,16 +12,30 @@ void Book::Hello(){
 Book::Book(std::string _title, std::string _author, int _year, std::string _isbn, bool _isAvailable, std::string _borrowedBy){
     title = _title;
     author = _author;
+    
     year = _year;
-    isbn = _isbn;
+    
+    
     isAvailable = _isAvailable;
     borrowedBy = _borrowedBy;
 
-    /*if (1450 <= _year && _year <= 2025)
-            year = _year;
-    else{
-        throw "Wrong year";
-    }*/
+    if (_year < 1450 || _year > 2025){
+        std::string error = "Неверный год издания. Повторите попытку.";
+        throw error;
+    }
+    else if (1450 <= _year && _year <= 2025){
+        _year = year;
+    }
+    
+    if (_isbn == ""){
+        std::string error = "Ошибка: пустой ISBN. Повторите попытку.";
+        throw error;
+    }
+    else if (_isbn != ""){
+        isbn = _isbn;
+    }
+    
+    
 
 }
 void Book::borrowBook(const std::string& userName){

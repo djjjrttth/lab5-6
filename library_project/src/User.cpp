@@ -11,7 +11,7 @@ User::User(std::string _name, std::string _userId, std::vector<std::string> _bor
     userId = _userId;
     borrowedBooks = _borrowedBooks;
     maxBooksAllowed = _maxBookAllowed;
-        }
+}
 bool User::canBorrowMore(){
     int n = borrowedBooks.size();
     if (n >= maxBooksAllowed) return false;

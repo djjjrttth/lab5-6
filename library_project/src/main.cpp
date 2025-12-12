@@ -9,7 +9,7 @@ using namespace std;
 //Функция createBook для ввода данных с клавиатуры для создания экземпляра Book
 //Создание этой функции не требовалось по ТЗ, но она была создана для удобного ввода
 
-Book createBook(){
+Book createBook(Library& lib){
 
     std::string title;
     std::string author;
@@ -28,18 +28,18 @@ Book createBook(){
     cin >> year;
     cout << "ISBN: ";
     cin >> isbn;
-    //cout << "Available: ";
     
-    //if (isAvailable_str == "yes" || isAvailable_str == "YES") isAvailable = true;
-    //else if (isAvailable_str == "no" || isAvailable_str == "NO") isAvailable = false;
-    //cout << "BorrowedBy: ";
-    //cin >> borrowedBy;
-
-
+    Book* bb = lib.findBookByISBN(isbn);
+    if (bb){
+        
+        std::string error = "Ошибка: книга уже существует."; // проверка на существование тут (в main), так как нужен доступ к классу библиотеки
+        throw error;                                         // проврека на существование тут, так как нужен доступ к isbn
+    }
+    
+    
     Book b = Book(title, author, year, isbn, isAvailable, borrowedBy);
-    
     return b;
-
+    
 }
 
 
@@ -104,9 +104,14 @@ int main(){
         lib.displayAllUsers();
     }
     else if (choice == 3){
-        Book b = createBook();
-        lib.addBook(b);
 
+        try{
+            Book b = createBook(lib);
+            lib.addBook(b);
+        }
+        catch(std::string e){
+            cout << e << endl;
+        }
 
     }
     else if (choice == 4){

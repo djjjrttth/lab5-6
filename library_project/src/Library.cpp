@@ -1,5 +1,5 @@
 #include "Library.h"
-
+using namespace std;
 Library::Library(){
 
 }
@@ -9,6 +9,8 @@ Library::Library(std::vector<Book> _books, std::vector<User> _users, std::string
     dataFile = _dataFile;
 }
 void Library::addBook(const Book& book){
+    
+
     books.push_back(book);
 }
 
@@ -30,6 +32,16 @@ void Library::borrowBook(const std::string& userName, const std::string& isbn){
         
     }
 
+    if (b->getIsAvailable() == false){
+        std::string error = "Ошибка: книга уже занята.";
+        throw error;
+    }
+    
+    if (b->getBorrowedBy() == u->getName()){
+        std::string error = "Вы уже взяли эту книгу.";
+        throw error;
+    }
+
     u->addBook(isbn);
     b->borrowBook(userName);
     cout << "Книга успешно взята." << endl;
@@ -45,6 +57,12 @@ void Library::returnBook(const std::string& userName, const std::string& isbn){
         std::string error = "Неверное имя пользователя или ISBN книги. Повторите попытку.";
         throw error;
     }
+
+    if (b->getIsAvailable() == true){
+        std::string error = "Эта книга уже возвращена.";
+        throw error;
+    }
+
 
     b->returnBook();
     u->removeBook(isbn);
