@@ -6,7 +6,7 @@ using namespace std;
 
 #include "User.h"
 
-User::User(std::string _name, std::string _userId, std::vector<std::string> _borrowedBooks, int _maxBookAllowed){
+User::User(std::string _name, std::string _userId, std::vector<std::string> _borrowedBooks, int _maxBookAllowed=3){
     name = _name;
     userId = _userId;
     borrowedBooks = _borrowedBooks;
@@ -18,10 +18,10 @@ bool User::canBorrowMore(){
     return true;
 }
 void User::addBook(const std::string& isbn){
-    if (borrowedBooks.size() < maxBooksAllowed)
-        borrowedBooks.push_back(isbn);
-    else
-        cout << "Достигнут лимит хранения!" << endl;
+    //if (borrowedBooks.size() < maxBooksAllowed)
+    borrowedBooks.push_back(isbn);
+    //else
+    //    cout << "Достигнут лимит хранения!" << endl;
 }
 void User::removeBook(const std::string& isbn){
     int n = borrowedBooks.size();

@@ -127,12 +127,25 @@ int main(){
         }
         catch(std::string e){
             cout << e << endl;
-            
+
         }
     }
     else if (choice == 6){
-        /*std::string isbn = b1.getIsbn();
-        lib.returnBook(isbn);*/
+        std::string userName;
+        std::string ISBN;
+        cout << "Введите имя пользователя: ";
+        cin >> userName;
+        cout << "Введите ISBN книги: ";
+        cin >> ISBN;
+
+        try{
+            lib.returnBook(userName, ISBN);
+        }
+        catch(std::string error){
+            cout << error << endl;
+        }
+
+        
     }
     else if (choice == 7){
         std::string isbn;
@@ -144,7 +157,7 @@ int main(){
             cout << "Книга не найдена" << endl;
         }
         else{
-            cout << "Найдена книга" << endl;
+            cout << "Найдена книга: " << endl;
             b->displayInfo();
         }
         /*std::string isbn = b1.getIsbn();

@@ -32,11 +32,23 @@ void Library::borrowBook(const std::string& userName, const std::string& isbn){
 
     u->addBook(isbn);
     b->borrowBook(userName);
-    cout << "Книга добавлена." << endl;
+    cout << "Книга успешно взята." << endl;
 
 
 }
-void Library::returnBook(const std::string& isbn){
+//в эту функцию добавлено, что передается поле userName для того, чтобы у пользователя удалить эту книгу
+void Library::returnBook(const std::string& userName, const std::string& isbn){
+    Book* b = Library::findBookByISBN(isbn);
+    User* u = Library::findUserByName(userName);
+    
+    if (u == nullptr || b == nullptr){
+        std::string error = "Неверное имя пользователя или ISBN книги. Повторите попытку.";
+        throw error;
+    }
+
+    b->returnBook();
+    u->removeBook(isbn);
+    cout << "Книга успешно возвращена." << endl;
 
 }
 Book* Library::findBookByISBN(const std::string& isbn){
